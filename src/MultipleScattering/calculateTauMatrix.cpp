@@ -464,7 +464,7 @@ void calculateTauMatrix(LSMSSystemParameters &lsms, LocalTypeInfo &local,
           devM = deviceStorage->getDevM();
           transferMatrixToGPUHip(devM, m);
           devT0 = deviceStorage->getDevT0();
-          transferT0MatrixToGPUHip(devT0, lsms, local, atom, iie);
+          transferT0MatrixToGPUHip(devT0, lsms, local, atom, iie, ispin);
           break;
 #endif
         default:
@@ -520,7 +520,7 @@ void calculateTauMatrix(LSMSSystemParameters &lsms, LocalTypeInfo &local,
           break;
         case MST_LINEAR_SOLVER_ZGETRF_ROCSOLVER:
           devT0 = deviceStorage->getDevT0();
-          transferT0MatrixToGPUHip(devT0, lsms, local, atom, iie);
+          transferT0MatrixToGPUHip(devT0, lsms, local, atom, iie, ispin);
           break;
 #ifdef ACCELERATOR_CUDA_C
         case MST_LINEAR_SOLVER_ZGETRF_CUBLAS:

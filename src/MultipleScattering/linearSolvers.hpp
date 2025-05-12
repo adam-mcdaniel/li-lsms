@@ -145,7 +145,7 @@ void unitMatrixCuda(T *devM, int lDim, int nCol) {
 #ifdef ACCELERATOR_HIP
 void transferMatrixToGPUHip(Complex *devM, Matrix<Complex> &m);
 void transferMatrixFromGPUHip(Matrix<Complex> &m, hipDoubleComplex *devM);
-void transferT0MatrixToGPUHip(Complex *devT0, LSMSSystemParameters &lsms, LocalTypeInfo &local, AtomData &atom, int iie);
+void transferT0MatrixToGPUHip(Complex *devT0, LSMSSystemParameters &lsms, LocalTypeInfo &local, AtomData &atom, int iie, int ispin);
 void transferFullTMatrixToGPUHip(Complex *devT, LSMSSystemParameters &lsms, LocalTypeInfo &local,
                                   AtomData &atom, int ispin);
 

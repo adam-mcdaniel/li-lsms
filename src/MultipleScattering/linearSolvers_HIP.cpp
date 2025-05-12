@@ -71,10 +71,12 @@ __global__ void zeroDiagonalBlocksKernelHip(T *devM, int lDim, int nCol,
 }
 
 void transferT0MatrixToGPUHip(Complex *devT0, LSMSSystemParameters &lsms,
-                              LocalTypeInfo &local, AtomData &atom, int iie) {
+                              LocalTypeInfo &local, AtomData &atom, int iie, int ispin) {
   int kkrsz_ns = lsms.n_spin_cant * atom.kkrsz;
+  int jsm =  kkrsz_ns * kkrsz_ns * ispin;
+
   hipError_t ret = hipMemcpy(devT0,
-            &local.tmatStore(iie * local.blkSizeTmatStore, atom.LIZStoreIdx[0]),
+            &local.tmatStore(iie * local.blkSizeTmatStore + jsm, atom.LIZStoreIdx[0]),
             kkrsz_ns * kkrsz_ns * sizeof(hipDoubleComplex),
             hipMemcpyHostToDevice);
 }
