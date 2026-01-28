@@ -1,20 +1,23 @@
 #!/bin/bash 
 LSMS_ROOT=$(pwd)
 
+export SETUP_BUILD_ENV=$(pwd)/../setup-build-env.sh
+setup_build_environment() {
+    if [ -f $SETUP_BUILD_ENV ]; then
+        source $SETUP_BUILD_ENV
+    else
+        export ROCM_VERSION=6.4.1
+        module load libfabric/1.22.0 perftools-base/24.11.0 PrgEnv-amd/8.6.0 cray-mpich/8.1.31 amd/$ROCM_VERSION rocm/$ROCM_VERSION
+        export MPICH_GPU_SUPPORT_ENABLED=1
+        export CRAY_MPICH_PREFIX=$(dirname $(dirname $(which mpicc)))
+    fi
+}
+setup_build_environment
+
 rm -Rf build
 mkdir build
 cd build
 
-module reset
-
-module load amd/6.4.1 \
-    rocm/6.4.1 \
-    PrgEnv-amd
-
-module load cray-hdf5-parallel
-export ROCM_PATH=/opt/rocm-6.4.1
-
-module list
 
 echo "HDF5_DIR=$HDF5_DIR"
 echo "ROCM_PATH=$ROCM_PATH"
