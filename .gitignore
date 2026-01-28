@@ -293,6 +293,12 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+FePt/*.out
+FePt/*.err
+FePt/*.csv
+FePt/*.sh
+FePt/sim_*.txt
+experiments
 build/
 develop-eggs/
 dist/

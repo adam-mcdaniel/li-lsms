@@ -18,9 +18,20 @@ set(AMDGPU_TARGETS "gfx90a")
 set(GPU_TARGETS "gfx90a")
 set(CMAKE_CXX_FLAGS "-std=c++17 --gcc-toolchain=/opt/cray/pe/gcc/12.2.0/snos -L/opt/cray/pe/gcc/12.2.0/snos/lib64 -mtune=native")
 
+# Cray Fortran runtime is not added automatically when linking with C++ on Frontier.
+if (DEFINED ENV{CRAYLIBS_X86_64})
+  set(CRAY_FTN_LIB_DIR "$ENV{CRAYLIBS_X86_64}")
+elseif (DEFINED ENV{FTN_X86_64})
+  set(CRAY_FTN_LIB_DIR "$ENV{FTN_X86_64}/lib")
+endif ()
+
+if (CRAY_FTN_LIB_DIR)
+  set(CRAY_FTN_LIBS "-L${CRAY_FTN_LIB_DIR} -lmodules -lfi -lcraymath -lf -lu -lcsup")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CRAY_FTN_LIBS}")
+endif ()
+
 # Loaded Modules:
 # module load PrgEnv-cray-amd
 # module load cray-hdf5
 # module load cmake libtool
 # module load rocm
-
