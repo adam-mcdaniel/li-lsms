@@ -298,7 +298,10 @@ FePt/*.err
 FePt/*.csv
 FePt/*.sh
 FePt/sim_*.txt
+FePt/info_evec_out
+FePt/w_fept
 experiments
+
 build/
 develop-eggs/
 dist/
